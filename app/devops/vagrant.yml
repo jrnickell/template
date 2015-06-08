@@ -1,0 +1,23 @@
+---
+- hosts: all
+  roles:
+  - novuso.upgrade
+  - novuso.time
+  - novuso.swap
+  - novuso.base
+  - novuso.firewall
+  - novuso.users
+  - novuso.git
+  - novuso.openssl
+  - { role: novuso.nginx, when: project_webserver == 'nginx' }
+  - { role: novuso.apache, when: project_webserver == 'apache' }
+  - novuso.mysql
+  - novuso.php-ext
+  - novuso.php-cli
+  - novuso.php-fpm
+  - novuso.phpmyadmin
+  - novuso.composer
+  - novuso.nodejs
+  - novuso.ruby
+  - novuso.mkdocs
+  - app-dev

@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+set_time_limit(0);
+
+require __DIR__.'/autoload.php';
+
+$paths = require __DIR__.'/paths.php';
+$paths['cache'] = $paths['cache'].'/robo';
+$paths['logs'] = $paths['logs'].'/robo';
+
+$robo = $paths['bin'].'/robo';
+
+if (!file_exists($robo)) {
+    $message = sprintf('Composer installation required; missing %s', $robo);
+    throw new RuntimeException($message);
+}
+
+chdir(__DIR__);
+
+require $robo;

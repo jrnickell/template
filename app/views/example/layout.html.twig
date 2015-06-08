@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Template{% endblock %}
+
+{% block body %}
+{% block openWrapper %}
+<div id="wrapper" class="wrapper">
+{% endblock %}
+{% block navigation %}
+{% endblock %}
+{% block header %}
+<header id="header" class="header" role="banner">
+</header><!-- #header -->
+{% endblock %}
+{% block main %}
+{% endblock %}
+{% block footer %}
+<footer id="footer" class="footer" role="contentinfo">
+</footer><!-- #footer -->
+{% endblock %}
+{% block closeWrapper %}
+</div><!-- #wrapper -->
+{% endblock %}
+{% endblock %}
+
+{% block headLink %}
+<link id="css-site" rel="stylesheet" type="text/css" href="
+{%- if app.debug -%}
+/app_assets/css/site.css?v={{ "now"|date("U") }}
+{%- else -%}
+/app_assets/css/site-{{ app.version }}.css
+{%- endif -%}
+">
+{% endblock %}
+
+{% block headScript %}
+<script type="text/javascript" src="
+{%- if app.debug -%}
+/app_assets/dist/modernizr-2.8.3.js
+{%- else -%}
+/app_assets/dist/modernizr-2.8.3.min.js
+{%- endif -%}
+"></script>
+{% endblock %}
+
+{% block footScript %}
+{% if app.debug %}
+<script type="text/javascript" src="/app_assets/vendor/requirejs/require.js?v={{ 'now'|date('U') }}"></script>
+<script type="text/javascript" src="/app_assets/src/config.js?v={{ 'now'|date('U') }}"></script>
+<script type="text/javascript" src="/app_assets/src/site.js?v={{ 'now'|date('U') }}"></script>
+{% else %}
+<script type="text/javascript" src="/app_assets/js/site-{{ app.version }}.js"></script>
+{% endif %}
+{% endblock %}

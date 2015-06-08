@@ -1,0 +1,5 @@
+---
+- name: "config parameters"
+  template:
+    src: "parameters.php.j2"
+    dest: "{{ app_root_dir }}/app/config/parameters.php"

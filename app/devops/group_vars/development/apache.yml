@@ -1,0 +1,21 @@
+---
+apache_virtual_hosts:
+- name: "{{ project_name }}"
+  server_name: "{{ project_hostname }}"
+  document_root: "{{ project_public }}"
+  server_aliases: ["{{ project_aliases }}"]
+  directory_index: "index.html index.php"
+  ssl_enabled: true
+  ssl_cert_file: "/srv/ssl/certs/{{ project_name }}.crt"
+  ssl_cert_key: "/srv/ssl/private/{{ project_name }}.key"
+  files_match:
+    regex: "\\.php$"
+    handler: "proxy:fcgi://127.0.0.1:9000"
+- name: "{{ project_name }}-cov"
+  server_name: "cov.{{ project_hostname }}"
+  document_root: "{{ project_root }}/app/build/coverage"
+  directory_index: "index.html"
+- name: "{{ project_name }}-api"
+  server_name: "api.{{ project_hostname }}"
+  document_root: "{{ project_root }}/app/build/api"
+  directory_index: "index.html"

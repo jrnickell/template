@@ -1,0 +1,4 @@
+---
+ruby_gems:
+- name: "compass"
+  state: latest

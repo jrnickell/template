@@ -1,0 +1,5 @@
+---
+nodejs_packages:
+- name: bower
+  state: latest
+  global: yes

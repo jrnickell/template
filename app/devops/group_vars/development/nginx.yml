@@ -1,0 +1,73 @@
+---
+nginx_server_configs:
+- name: "{{ project_name }}"
+  servers:
+  - listen: ["80 default_server"]
+    return: "444"
+  - listen: ["80"]
+    server_name: "{{ project_aliases }}"
+    return: "301 $scheme://{{ project_hostname }}$request_uri"
+  - listen: ["80"]
+    server_name: "{{ project_hostname }}"
+    root: "{{ project_public }}"
+    index: "index.html index.php"
+    charset: "utf-8"
+    access_log: "/var/log/nginx/{{ project_name }}.log"
+    error_log: "/var/log/nginx/{{ project_name }}-error.log error"
+    includes: ["h5bp/basic.conf"]
+    locations:
+    - match: "= /favicon.ico"
+      access_log: "off"
+      log_not_found: "off"
+    - match: "= /robots.txt"
+      access_log: "off"
+      log_not_found: "off"
+    - match: "/"
+      locations:
+      - match: "~* ^(.+)-(?:\\d+)\\.?(?:\\d+)?\\.?(?:\\d+)?\\.(js|css|png|jpe?g|gif|pdf|rtf|txt|docx?|gz|g?zip|ppt|mp4|ogv|flv|webm|mov)$"
+        try_files: "$uri $1.$2 /index.php$is_args$args"
+      - match: "/"
+        try_files: "$uri /index.php$is_args$args"
+    - match: "~ ^/(index|dev)\\.php(/|$)"
+      fastcgi_split_path_info: "^(.+\\.php)(/.+)$"
+      fastcgi_pass: "127.0.0.1:9000"
+      fastcgi_index: "index.php"
+      includes: ["fastcgi.conf"]
+- name: "{{ project_name }}-cov"
+  servers:
+  - listen: ["80"]
+    server_name: "cov.{{ project_hostname }}"
+    root: "{{ project_root }}/app/build/coverage"
+    index: "index.html"
+    charset: "utf-8"
+    access_log: "/var/log/nginx/{{ project_name }}-cov.log"
+    error_log: "/var/log/nginx/{{ project_name }}-cov-error.log error"
+    includes: ["h5bp/basic.conf"]
+    locations:
+    - match: "= /favicon.ico"
+      access_log: "off"
+      log_not_found: "off"
+    - match: "= /robots.txt"
+      access_log: "off"
+      log_not_found: "off"
+    - match: "/"
+      try_files: "$uri $uri/ =404"
+- name: "{{ project_name }}-api"
+  servers:
+  - listen: ["80"]
+    server_name: "api.{{ project_hostname }}"
+    root: "{{ project_root }}/app/build/api"
+    index: "index.html"
+    charset: "utf-8"
+    access_log: "/var/log/nginx/{{ project_name }}-api.log"
+    error_log: "/var/log/nginx/{{ project_name }}-api-error.log error"
+    includes: ["h5bp/basic.conf"]
+    locations:
+    - match: "= /favicon.ico"
+      access_log: "off"
+      log_not_found: "off"
+    - match: "= /robots.txt"
+      access_log: "off"
+      log_not_found: "off"
+    - match: "/"
+      try_files: "$uri $uri/ =404"

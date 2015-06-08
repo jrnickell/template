@@ -1,0 +1,6 @@
+---
+php_fpm_server: "{{ project_webserver }}"
+php_fpm_user: "{{ ansible_user_id }}"
+php_fpm_group: "{{ ansible_user_id }}"
+php_fpm_extra_settings:
+- setting: "xdebug.max_nesting_level=250"

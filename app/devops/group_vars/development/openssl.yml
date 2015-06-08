@@ -1,0 +1,4 @@
+---
+openssl_self_signed:
+- name: "{{ project_name }}"
+  domains: ["{{ project_hostname }}"]

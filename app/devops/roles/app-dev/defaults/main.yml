@@ -1,0 +1,12 @@
+---
+app_root_dir: "/path/to/project"
+app_public_dir: "/path/to/project/public"
+app_database_driver: "pdo_mysql"
+app_database_host: "127.0.0.1"
+app_database_port: ~
+app_database_name: "dbname"
+app_database_user: "user"
+app_database_password: "password"
+app_database_charset: "utf8"
+app_database_path: ~
+app_github_access_token: "ThisIsTheGitHubApiAccessToken"
