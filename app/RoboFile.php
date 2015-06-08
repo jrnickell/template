@@ -50,7 +50,6 @@ class RoboFile extends Tasks
         $this->phpCodeStyle();
         $this->phpMessDetect();
         $this->phpTestUnit();
-        $this->docsPhpApi();
         $this->yell('build complete');
     }
 
@@ -299,35 +298,6 @@ class RoboFile extends Tasks
             ->mkdir($paths['docapi'])
             ->run();
         $this->info('Artifact directories prepared');
-    }
-
-    //===================================================//
-    // Documentation Targets                             //
-    //===================================================//
-
-    /**
-     * Generates PHP API documentation
-     *
-     * @param array $opts The options
-     *
-     * @option $force Forces documentation rebuild from scratch
-     */
-    public function docsPhpApi($opts = ['force' => false])
-    {
-        $force = isset($opts['force']) && $opts['force'] ? true : false;
-        $paths = $this->getPaths();
-        $this->yell('docs:php-api');
-        $this->info('Generating PHP API documentation');
-        $exec = $this->taskExec('php')
-            ->arg($paths['bin'].'/sami.php')
-            ->arg('update');
-        if ($force) {
-            $exec->option('force');
-        }
-        $exec->arg($paths['build'].'/sami.php')
-            ->printed(true)
-            ->run();
-        $this->info('PHP API documentation generated');
     }
 
     //===================================================//
