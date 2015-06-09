@@ -2,6 +2,12 @@
 
 $config = require __DIR__.'/config.php';
 
-$overrides = [];
+$config_dev = [
+    'monolog' => [
+        'monolog.logfile' => $paths['logs'].'/app.log',
+        'monolog.level'   => 'INFO',
+        'monolog.name'    => 'app'
+    ]
+];
 
-return array_merge($config, $overrides);
+return array_merge($config, $config_dev);

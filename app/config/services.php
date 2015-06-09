@@ -10,12 +10,15 @@ $app['filesystem'] = $app->share(function () {
     return new Symfony\Component\Filesystem\Filesystem();
 });
 
+// monolog
+$app->register(new Silex\Provider\MonologServiceProvider(), $app['config']['monolog']);
+
 // service controllers
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
 
 // doctrine dbal
 $app->register(new Silex\Provider\DoctrineServiceProvider(), [
-    'db.options' => $app['config']['db.conn']
+    'db.options' => $app['config']['database']
 ]);
 
 // twig templating engine

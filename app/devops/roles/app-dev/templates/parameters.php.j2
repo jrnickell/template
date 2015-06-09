@@ -1,7 +1,7 @@
 <?php // {{ ansible_managed }}
 
 return [
-    'db.conn' => [
+    'database' => [
         'driver'   => {% if app_database_driver is string %}'{{ app_database_driver }}'{% else %}null{% endif %},
         'dbname'   => {% if app_database_name is string %}'{{ app_database_name }}'{% else %}null{% endif %},
         'host'     => {% if app_database_host is string %}'{{ app_database_host }}'{% else %}null{% endif %},
