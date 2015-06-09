@@ -1,5 +1,6 @@
 /.vagrant/
 /app/build/phpunit.xml
+/app/build/api/
 /app/build/coverage/
 /app/build/logs/
 /app/config/parameters.php

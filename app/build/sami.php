@@ -11,10 +11,11 @@ $iterator = Finder::create()
     ->in($paths['src']);
 
 $options = [
-    'theme'     => 'default',
-    'title'     => 'Project API',
-    'build_dir' => $paths['docapi'],
-    'cache_dir' => $paths['cache'].'/dev/sami'
+    'theme'                => 'default',
+    'title'                => 'Project API',
+    'build_dir'            => $paths['docapi'],
+    'cache_dir'            => $paths['cache'].'/dev/sami',
+    'default_opened_level' => 0
 ];
 
 return new Sami($iterator, $options);
