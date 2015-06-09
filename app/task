@@ -6,8 +6,8 @@ set_time_limit(0);
 require __DIR__.'/autoload.php';
 
 $paths = require __DIR__.'/paths.php';
-$paths['cache'] = $paths['cache'].'/robo';
-$paths['logs'] = $paths['logs'].'/robo';
+$paths['cache'] = $paths['cache'].'/task';
+$paths['logs'] = $paths['logs'].'/task';
 
 $robo = $paths['bin'].'/robo';
 
