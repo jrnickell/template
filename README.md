@@ -1,3 +1,1 @@
 # Project Template
-
-TODO: Documentation

@@ -36,21 +36,69 @@ class RoboFile extends Tasks
     //===================================================//
 
     /**
+     * Installs static assets
+     *
+     * @param array $opts The options
+     *
+     * @option $prod Optimize for production
+     */
+    public function assets($opts = ['prod' => false])
+    {
+        $prod = isset($opts['prod']) && $opts['prod'] ? true : false;
+        $this->info('Installing static assets');
+        $this->assetsCompileSass(['prod' => $prod]);
+        $this->assetsRequireJs();
+        $this->info('Static assets installed');
+    }
+
+    /**
      * The default build process
      */
     public function build()
     {
+        $this->info('Starting build');
         $this->dirPrepare();
-        $this->bowerInstall();
-        $this->bowerUpdate();
-        $this->bowerPrune();
-        $this->assetsCompileSass();
-        $this->assetsRequireJs();
         $this->phpLint();
         $this->phpCodeStyle();
         $this->phpMessDetect();
         $this->phpTestUnit();
-        $this->yell('build complete');
+        $this->docsPhpApi();
+        $this->info('build complete');
+    }
+
+    /**
+     * Installs project dependencies
+     *
+     * @param array $opts The options
+     *
+     * @option $prod Optimize for production
+     */
+    public function install($opts = ['prod' => false])
+    {
+        $prod = isset($opts['prod']) && $opts['prod'] ? true : false;
+        $this->info('Installing project dependencies');
+        $this->composerInstall(['prod' => $prod]);
+        $this->bowerInstall(['prod' => $prod]);
+        $this->bowerUpdate(['prod' => $prod]);
+        $this->bowerPrune();
+        $this->info('Project dependencies installed');
+    }
+
+    /**
+     * Updates project dependencies
+     *
+     * @param array $opts The options
+     *
+     * @option $prod Optimize for production
+     */
+    public function update($opts = ['prod' => false])
+    {
+        $prod = isset($opts['prod']) && $opts['prod'] ? true : false;
+        $this->info('Updating project dependencies');
+        $this->composerUpdate(['prod' => $prod]);
+        $this->bowerUpdate(['prod' => $prod]);
+        $this->bowerPrune();
+        $this->info('Project dependencies updated');
     }
 
     //===================================================//
@@ -298,6 +346,35 @@ class RoboFile extends Tasks
             ->mkdir($paths['docapi'])
             ->run();
         $this->info('Artifact directories prepared');
+    }
+
+    //===================================================//
+    // Documentation Targets                             //
+    //===================================================//
+
+    /**
+     * Generates PHP API documentation
+     *
+     * @param array $opts The options
+     *
+     * @option $force Forces documentation rebuild from scratch
+     */
+    public function docsPhpApi($opts = ['force' => false])
+    {
+        $force = isset($opts['force']) && $opts['force'] ? true : false;
+        $paths = $this->getPaths();
+        $this->yell('docs:php-api');
+        $this->info('Generating PHP API documentation');
+        $exec = $this->taskExec('php')
+            ->arg($paths['bin'].'/sami.php')
+            ->arg('update');
+        if ($force) {
+            $exec->option('force');
+        }
+        $exec->arg($paths['build'].'/sami.php')
+            ->printed(true)
+            ->run();
+        $this->info('PHP API documentation generated');
     }
 
     //===================================================//

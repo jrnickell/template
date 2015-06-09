@@ -15,4 +15,6 @@ source /usr/local/share/chruby/auto.sh
 cd $PROJECT_ROOT
 
 # run tasks
+php app/task install
+php app/task assets
 php app/task build
