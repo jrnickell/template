@@ -26,6 +26,6 @@ $app->register(new Silex\Provider\TwigServiceProvider(), [
     'twig.path'    => $app['paths']['views'],
     'twig.options' => [
         'debug' => $app['debug'],
-        'cache' => $app['paths']['cache']
+        'cache' => $app['paths']['cache'].'/twig'
     ]
 ]);
