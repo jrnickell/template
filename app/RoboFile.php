@@ -46,6 +46,7 @@ class RoboFile extends Tasks
     {
         $prod = isset($opts['prod']) && $opts['prod'] ? true : false;
         $this->info('Installing static assets');
+        $this->assetsClearCompiled();
         $this->assetsCompileSass(['prod' => $prod]);
         $this->assetsRequireJs();
         $this->info('Static assets installed');
@@ -106,6 +107,23 @@ class RoboFile extends Tasks
     //===================================================//
 
     /**
+     * Removes compiled CSS and JS
+     */
+    public function assetsClearCompiled()
+    {
+        $paths = $this->getPaths();
+        $this->stopOnFail(true);
+        $this->yell('assets:clear-compiled');
+        $this->info('Clearing compiled assets');
+        $this->taskFileSystemStack()
+            ->remove($paths['assets'].'/.sass-cache')
+            ->remove($paths['assets'].'/css')
+            ->remove($paths['assets'].'/js')
+            ->run();
+        $this->info('Compiled assets cleared');
+    }
+
+    /**
      * Compiles Sass assets
      *
      * @param array $opts The options
@@ -119,7 +137,6 @@ class RoboFile extends Tasks
         $this->stopOnFail(true);
         $this->yell('assets:compile-sass');
         $this->info('Compiling Sass assets');
-
         $exec = $this->taskExec('compass')
             ->dir($paths['assets'])
             ->arg('compile');
