@@ -17,15 +17,7 @@ $app->register(new Silex\Provider\MonologServiceProvider(), $app['config']['mono
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
 
 // doctrine dbal
-$app->register(new Silex\Provider\DoctrineServiceProvider(), [
-    'db.options' => $app['config']['database']
-]);
+$app->register(new Silex\Provider\DoctrineServiceProvider(), $app['config']['dbal']);
 
 // twig templating engine
-$app->register(new Silex\Provider\TwigServiceProvider(), [
-    'twig.path'    => $app['paths']['views'],
-    'twig.options' => [
-        'debug' => $app['debug'],
-        'cache' => $app['paths']['cache'].'/twig'
-    ]
-]);
+$app->register(new Silex\Provider\TwigServiceProvider(), $app['config']['twig']);

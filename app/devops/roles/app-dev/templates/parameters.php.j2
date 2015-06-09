@@ -1,15 +1,17 @@
 <?php // {{ ansible_managed }}
 
 return [
-    'database' => [
-        'driver'   => {% if app_database_driver is string %}'{{ app_database_driver }}'{% else %}null{% endif %},
-        'dbname'   => {% if app_database_name is string %}'{{ app_database_name }}'{% else %}null{% endif %},
-        'host'     => {% if app_database_host is string %}'{{ app_database_host }}'{% else %}null{% endif %},
-        'user'     => {% if app_database_user is string %}'{{ app_database_user }}'{% else %}null{% endif %},
-        'password' => {% if app_database_password is string %}'{{ app_database_password }}'{% else %}null{% endif %},
-        'charset'  => {% if app_database_charset is string %}'{{ app_database_charset }}'{% else %}null{% endif %},
-        'path'     => {% if app_database_path is string %}'{{ app_database_path }}'{% else %}null{% endif %},
-        'port'     => {% if app_database_port is number %}{{ app_database_port }}{% else %}null{% endif %}
+    'dbal' => [
+        'db.options' => [
+            'driver'   => {% if app_database_driver is string %}'{{ app_database_driver }}'{% else %}null{% endif %},
+            'dbname'   => {% if app_database_name is string %}'{{ app_database_name }}'{% else %}null{% endif %},
+            'host'     => {% if app_database_host is string %}'{{ app_database_host }}'{% else %}null{% endif %},
+            'user'     => {% if app_database_user is string %}'{{ app_database_user }}'{% else %}null{% endif %},
+            'password' => {% if app_database_password is string %}'{{ app_database_password }}'{% else %}null{% endif %},
+            'charset'  => {% if app_database_charset is string %}'{{ app_database_charset }}'{% else %}null{% endif %},
+            'path'     => {% if app_database_path is string %}'{{ app_database_path }}'{% else %}null{% endif %},
+            'port'     => {% if app_database_port is number %}{{ app_database_port }}{% else %}null{% endif %}
 
+        ]
     ]
 ];

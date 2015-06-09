@@ -8,6 +8,13 @@ $config = [
         'monolog.logfile' => $app['paths']['logs'].'/app.log',
         'monolog.level'   => 'ERROR',
         'monolog.name'    => 'app'
+    ],
+    'twig'    => [
+        'twig.path'    => $app['paths']['views'],
+        'twig.options' => [
+            'debug' => $app['debug'],
+            'cache' => $app['paths']['cache'].'/twig'
+        ]
     ]
 ];
 
